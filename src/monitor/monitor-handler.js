@@ -19,14 +19,14 @@ export class MonitorHandler {
         const liveLogs = await this.getLatestLiveTime(liveGameLogs(model));
         const delayEvents = this.getDelayEvents(liveLogs);
 
-        if (Object.keys(delayEvents) > 0) {
-            logger.logError(`${model} - ${JSON.stringify(delayEvents)}`);
+        if (Object.keys(delayEvents).length > 0) {
+            logger.logError(`${model} - Max Delay Time On Round \n${JSON.stringify(delayEvents, undefined, 2)}`);
         }
     }
 
     getLatestLiveTime(model) {
         return model
-            .find({ time: { $gt: new Date() - appConfigs.intervalTime } })
+            .find({ time: { $gt: new Date() - appConfigs.intervalTime } }, { _id: false, _v: false })
             .sort({ time: 1 })
             .lean()
             .exec();
@@ -38,9 +38,9 @@ export class MonitorHandler {
             const deltaTime = nextEvent?.time - acc.time;
 
             if (nextEvent?.roundId == acc.roundId && deltaTime > appConfigs.maxDeltaTime) {
-                const event = { ...nextEvent, deltaTime };
-
-                rs[nextEvent.roundId] ? rs[nextEvent.roundId].push(event) : (rs[nextEvent.roundId] = [event]);
+                if (!rs[nextEvent.roundId] || rs[nextEvent.roundId] < deltaTime) {
+                    rs[nextEvent.roundId] = deltaTime;
+                }
             }
 
             return rs;
