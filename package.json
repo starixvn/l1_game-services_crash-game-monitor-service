@@ -1,0 +1,48 @@
+{
+    "name": "crash-game-monitor-service",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./src/app.js",
+    "scripts": {
+        "test": "jest --testPathPattern=src/",
+        "test-coverage": "jest --testPathPattern=src/ --collect-coverage",
+        "dev": "nodemon --es-module-specifier-resolution=node --watch ./src ./src/app.js",
+        "debug": "nodemon --es-module-specifier-resolution=node --watch ./ --inspect ./src/app.js",
+        "prod": "node --max-old-space-size=8192 --es-module-specifier-resolution=node ./src/app.js",
+        "stats": "nodemon --es-module-specifier-resolution=node --watch ./tests ./tests/rtp/index.js"
+    },
+    "jestSonar": {
+        "reportPath": "reports",
+        "reportFile": "test-reporter.xml",
+        "indent": 4
+    },
+    "author": "pentagon",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+        "cron": "^2.0.0",
+        "express": "^4.17.1",
+        "sc-base-database": "^1.11.1"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.12.11",
+        "@commitlint/cli": "^9.1.2",
+        "@commitlint/config-conventional": "^9.1.2",
+        "@types/jest": "^26.0.20",
+        "babel-jest": "^26.6.3",
+        "husky": "^4.2.5",
+        "install": "^0.13.0",
+        "jest": "^26.6.3",
+        "jest-auto-fixture": "^1.0.6",
+        "jest-extended": "^0.11.5",
+        "jest-junit": "^16.0.0",
+        "jest-micro-auto-stub": "1.0.9",
+        "jest-sonar-reporter": "^2.0.0",
+        "nodemon": "^2.0.4"
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
+    }
+}
