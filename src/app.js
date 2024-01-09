@@ -11,6 +11,10 @@ const run = async () => {
 
     app.set("port", process.env.PORT || appConfigs.hostingPort);
 
+    app.get("/", (req, res, next) => {
+        res.send(`I'm Crash Game Monitor Service. You'd better not touch me, babe!`);
+    });
+
     const httpServer = http.createServer(app);
 
     middlewares.processErrorHandler.handle(httpServer, process);
