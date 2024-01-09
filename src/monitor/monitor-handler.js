@@ -20,7 +20,7 @@ export class MonitorHandler {
         const delayEvents = this.getDelayEvents(liveLogs);
 
         if (Object.keys(delayEvents).length > 0) {
-            logger.logError(`${model} - Max Delay Time On Round \n${JSON.stringify(delayEvents, undefined, 2)}`);
+            logger.logError(`${model} - Max Delay Time On Round ${JSON.stringify(delayEvents)}`);
         }
     }
 
